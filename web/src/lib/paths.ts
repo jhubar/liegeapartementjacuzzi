@@ -1,4 +1,6 @@
-/** Build /img/... URLs with correct encoding for spaces in folder names. */
+/** URLs des fichiers dans `public/img` — respecte `base` Vite (ex. GitHub Pages). */
 export function imgUrl(...segments: string[]): string {
-  return '/img/' + segments.map((s) => encodeURIComponent(s)).join('/')
+  const base = import.meta.env.BASE_URL
+  const encoded = segments.map((s) => encodeURIComponent(s)).join('/')
+  return `${base}img/${encoded}`
 }
