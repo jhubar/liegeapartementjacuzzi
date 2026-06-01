@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
+import { getSiteName } from '../config/site'
 import { homeSectionTo } from '../lib/paths'
 
 const nav = [
@@ -16,6 +17,7 @@ const nav = [
 export function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const siteName = getSiteName()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -45,7 +47,7 @@ export function Header() {
           className="group flex cursor-pointer items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-brand-cream"
         >
           <span className="font-display text-lg font-semibold tracking-tight text-brand-ink transition-colors duration-200 group-hover:text-brand-accent sm:text-xl">
-            Nom de l’appartement
+            {siteName}
           </span>
         </Link>
 

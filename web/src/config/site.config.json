@@ -1,0 +1,28 @@
+{
+  "name": "Appartement Médiacité Liège",
+  "tagline": "Appartement 3 chambres au cœur de Liège",
+  "description": "Location de l'appartement entier — 3 chambres avec terrasse à Liège (4020), à deux pas de Médiacité. Jusqu'à 6 voyageurs, lit double par chambre. Réservation Airbnb ou demande directe.",
+  "url": "https://julienhubar.be/liegeapartementjacuzzi",
+  "locale": "fr_BE",
+  "email": "contact@example.com",
+  "phones": ["+32483597987", "+32477077331"],
+  "address": {
+    "streetAddress": "Rue d'Harscamp 48",
+    "addressLocality": "Liège",
+    "postalCode": "4020",
+    "addressCountry": "BE"
+  },
+  "geo": {
+    "latitude": 50.633565,
+    "longitude": 5.57738
+  },
+  "pricing": {
+    "nightFrom": 189,
+    "currency": "EUR"
+  },
+  "capacity": {
+    "numberOfRooms": 3,
+    "maxGuests": 6
+  },
+  "sameAs": ["https://fr.airbnb.be/rooms/1683423850329472195"]
+}

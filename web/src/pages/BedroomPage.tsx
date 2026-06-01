@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BedroomAmenities } from '../components/BedroomAmenities'
+import { Breadcrumbs, bedroomBreadcrumbs } from '../components/Breadcrumbs'
+import { SeoHead } from '../components/SeoHead'
 import { ArrowLeft } from 'lucide-react'
 import { ImageLightbox } from '../components/ImageLightbox'
-import { bedrooms, getBedroomBySlug } from '../data/bedrooms'
+import { bedrooms, getBedroomBySlug, ENTIRE_APARTMENT_RENTAL_NOTE } from '../data/bedrooms'
+import { absoluteAssetUrl, getSiteName } from '../config/site'
+import { buildBedroomPageSchema } from '../lib/schema'
 import { homeSectionTo } from '../lib/paths'
 
 type BedroomPageProps = {
@@ -20,7 +24,9 @@ export function BedroomPage({ slug }: BedroomPageProps) {
 
   if (!bedroom) {
     return (
-      <div className="mx-auto max-w-content px-4 py-32 text-center sm:px-6 lg:px-8">
+      <>
+        <SeoHead title="Chambre introuvable" description="Cette chambre n'existe pas." noindex />
+        <div className="mx-auto max-w-content px-4 py-32 text-center sm:px-6 lg:px-8">
         <h1 className="font-display text-2xl font-semibold text-brand-ink">Chambre introuvable</h1>
         <Link
           to={homeSectionTo('#chambres')}
@@ -29,19 +35,32 @@ export function BedroomPage({ slug }: BedroomPageProps) {
           <ArrowLeft className="h-4 w-4" aria-hidden />
           Retour aux chambres
         </Link>
-      </div>
+        </div>
+      </>
     )
   }
 
+  const siteName = getSiteName()
   const otherBedrooms = bedrooms.filter((b) => b.slug !== bedroom.slug)
+  const pageTitle = `${bedroom.title} | ${siteName}`
+  const pageDescription = `${bedroom.description} ${ENTIRE_APARTMENT_RENTAL_NOTE}`
 
   return (
     <>
+      <SeoHead
+        title={pageTitle}
+        description={pageDescription}
+        path={`/chambres/${bedroom.slug}`}
+        image={absoluteAssetUrl(bedroom.photos[0].src)}
+        jsonLd={buildBedroomPageSchema(bedroom)}
+      />
       <article className="bg-white pb-16 pt-28 sm:pb-20 sm:pt-32 lg:pb-24">
         <div className="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={bedroomBreadcrumbs(bedroom.title, bedroom.slug)} />
+
           <Link
             to={homeSectionTo('#chambres')}
-            className="inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-brand-muted transition-colors duration-200 hover:text-brand-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
+            className="mt-6 inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-brand-muted transition-colors duration-200 hover:text-brand-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
             Toutes les chambres
@@ -52,6 +71,9 @@ export function BedroomPage({ slug }: BedroomPageProps) {
               {bedroom.title}
             </h1>
             <p className="mt-4 text-lg leading-relaxed text-brand-muted">{bedroom.description}</p>
+            <p className="mt-4 rounded-xl border border-brand-accent/20 bg-brand-sand/50 px-4 py-3 text-sm leading-relaxed text-brand-ink">
+              {ENTIRE_APARTMENT_RENTAL_NOTE}
+            </p>
             <div className="mt-6">
               <BedroomAmenities />
             </div>
@@ -101,18 +123,23 @@ export function BedroomPage({ slug }: BedroomPageProps) {
             </ul>
           )}
 
-          <div className="mt-12 flex flex-wrap gap-4">
+          <div className="mt-12 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
               to={homeSectionTo('#reserver')}
               className="inline-flex cursor-pointer items-center justify-center rounded-full bg-brand-accent px-6 py-3.5 text-sm font-semibold text-white shadow-soft transition-colors duration-200 hover:bg-brand-accent-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
             >
-              Réserver cette chambre
+              Réserver l’appartement
             </Link>
+            <p className="text-sm text-brand-muted">
+              Location de l’appartement entier · jusqu’à 6 voyageurs
+            </p>
           </div>
 
           {otherBedrooms.length > 0 && (
             <aside className="mt-16 border-t border-stone-200 pt-12">
-              <h2 className="font-display text-xl font-semibold text-brand-ink">Autres chambres</h2>
+              <h2 className="font-display text-xl font-semibold text-brand-ink">
+                Les autres chambres de l’appartement
+              </h2>
               <ul className="mt-6 grid list-none gap-6 p-0 sm:grid-cols-2">
                 {otherBedrooms.map((other) => (
                   <li key={other.slug} className="list-none">

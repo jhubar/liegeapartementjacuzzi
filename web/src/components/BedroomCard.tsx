@@ -27,7 +27,7 @@ export function BedroomCard({ slug, title, description, imageSrc, imageAlt }: Be
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-900/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 motion-reduce:transition-none" />
         <span className="pointer-events-none absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-brand-ink opacity-0 shadow-sm backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100">
-          Voir la chambre
+          Voir les photos
         </span>
       </Link>
       <div className="flex flex-1 flex-col p-6">

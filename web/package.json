@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/fetch-calendar.mjs && tsc -b && vite build && cp dist/index.html dist/404.html",
+    "build": "node scripts/fetch-calendar.mjs && tsc -b && vite build && node scripts/generate-seo.mjs && cp dist/index.html dist/404.html",
     "preview": "vite preview"
   },
   "dependencies": {
     "lucide-react": "^0.454.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.16.0"
   },
   "devDependencies": {

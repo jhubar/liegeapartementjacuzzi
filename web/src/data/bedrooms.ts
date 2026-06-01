@@ -75,3 +75,7 @@ export const bedrooms: Bedroom[] = [
 export function getBedroomBySlug(slug: string | undefined): Bedroom | undefined {
   return bedrooms.find((b) => b.slug === slug)
 }
+
+/** Rappel affiché sur les pages chambres — pas de location à la chambre. */
+export const ENTIRE_APARTMENT_RENTAL_NOTE =
+  'L’appartement se loue en entier (3 chambres, salon, cuisine et terrasse). Les chambres ne sont pas disponibles séparément.'

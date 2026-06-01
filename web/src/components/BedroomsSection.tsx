@@ -13,8 +13,8 @@ export function BedroomsSection() {
         </h2>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed text-brand-muted">
           Chaque chambre offre une atmosphère intimiste pour se reposer après une journée dans Liège
-          — tons doux, matériaux agréables et détails soignés. Cliquez sur une chambre pour voir
-          toutes les photos.
+          — tons doux, matériaux agréables et détails soignés. L’appartement se loue en entier ;
+          cliquez sur une chambre pour voir toutes les photos.
         </p>
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
           {bedrooms.map((bedroom) => (

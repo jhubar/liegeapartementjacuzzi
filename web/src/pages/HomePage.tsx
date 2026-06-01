@@ -10,9 +10,13 @@ import { AvailabilityCalendar } from '../components/AvailabilityCalendar'
 import { LocationSection } from '../components/LocationSection'
 import { GalleryGrid } from '../components/GalleryGrid'
 import { BookingSection } from '../components/BookingSection'
+import { SeoHead } from '../components/SeoHead'
+import { DEFAULT_DESCRIPTION, getSiteName } from '../config/site'
+import { buildVacationRentalSchema } from '../lib/schema'
 
 export function HomePage() {
   const location = useLocation()
+  const siteName = getSiteName()
 
   useEffect(() => {
     if (location.hash) {
@@ -27,6 +31,12 @@ export function HomePage() {
 
   return (
     <>
+      <SeoHead
+        title={`${siteName} | Médiacité, Liège`}
+        description={DEFAULT_DESCRIPTION}
+        path="/"
+        jsonLd={buildVacationRentalSchema()}
+      />
       <HeroSection />
       <ApartmentOverview />
       <BedroomsSection />

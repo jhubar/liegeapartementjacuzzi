@@ -1,8 +1,10 @@
-/** Liens externes et réservation — URL Airbnb canonique (sans params de recherche). */
-export const AIRBNB_LISTING_URL =
-  'https://fr.airbnb.be/rooms/1683423850329472195' as const
+import siteConfig from './site.config.json'
 
-export const CONTACT_EMAIL = 'contact@example.com' as const
+/** Liens externes et réservation — URL Airbnb canonique (sans params de recherche). */
+export const AIRBNB_LISTING_URL = siteConfig.sameAs[0]
+
+export const CONTACT_EMAIL =
+  import.meta.env.VITE_CONTACT_EMAIL?.trim() || siteConfig.email
 
 export const BOOKING_MAX_GUESTS = 6
 

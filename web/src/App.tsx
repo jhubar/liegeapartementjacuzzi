@@ -1,8 +1,10 @@
 import { Link, Route, Routes, useParams } from 'react-router-dom'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
+import { SeoHead } from './components/SeoHead'
 import { HomePage } from './pages/HomePage'
 import { BedroomPage } from './pages/BedroomPage'
+import { LegalPage } from './pages/LegalPage'
 import { homeSectionTo } from './lib/paths'
 
 function BedroomRoute() {
@@ -46,9 +48,26 @@ export default function App() {
         }
       />
       <Route
+        path="/mentions-legales"
+        element={
+          <AppLayout>
+            <LegalPage kind="mentions-legales" />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/politique-confidentialite"
+        element={
+          <AppLayout>
+            <LegalPage kind="politique-confidentialite" />
+          </AppLayout>
+        }
+      />
+      <Route
         path="*"
         element={
           <AppLayout>
+            <SeoHead title="Page introuvable" description="Cette page n'existe pas." noindex />
             <div className="mx-auto max-w-content px-4 py-32 text-center">
               <h1 className="font-display text-2xl font-semibold text-brand-ink">Page introuvable</h1>
               <Link

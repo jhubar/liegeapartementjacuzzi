@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { AIRBNB_LISTING_URL, CONTACT_EMAIL } from '../config/booking-links'
+import { getSite, getSiteName } from '../config/site'
 import { homeSectionTo } from '../lib/paths'
 
 const footerLinks = [
@@ -13,12 +14,15 @@ const footerLinks = [
 ] as const
 
 export function Footer() {
+  const site = getSite()
+  const siteName = getSiteName()
+
   return (
     <footer id="contact" className="bg-stone-950 text-stone-300">
       <div className="mx-auto max-w-content px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-3">
           <div>
-            <p className="font-display text-lg font-semibold text-white">Nom de l’appartement</p>
+            <p className="font-display text-lg font-semibold text-white">{siteName}</p>
             <p className="mt-2 text-sm leading-relaxed">
               Appartement trois chambres · Liège, Belgique
               <br />
@@ -49,7 +53,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <a
-                  href="tel:+32483597987"
+                  href={`tel:${site.phones[0]}`}
                   className="cursor-pointer transition-colors hover:text-white focus:outline-none focus-visible:underline"
                 >
                   +32 483 59 79 87
@@ -57,7 +61,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="tel:+32477077331"
+                  href={`tel:${site.phones[1]}`}
                   className="cursor-pointer transition-colors hover:text-white focus:outline-none focus-visible:underline"
                 >
                   +32 477 07 73 31
@@ -87,24 +91,18 @@ export function Footer() {
         <div className="mt-12 flex flex-col gap-4 border-t border-stone-800 pt-8 text-sm sm:flex-row sm:items-center sm:justify-between">
           <p className="text-stone-500">© {new Date().getFullYear()} · Tous droits réservés.</p>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <a
-              href="#"
+            <Link
+              to="/mentions-legales"
               className="cursor-pointer text-stone-500 transition-colors hover:text-stone-300 focus:outline-none focus-visible:underline"
             >
               Mentions légales
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/politique-confidentialite"
               className="cursor-pointer text-stone-500 transition-colors hover:text-stone-300 focus:outline-none focus-visible:underline"
             >
               Politique de confidentialité
-            </a>
-            <a
-              href="#"
-              className="cursor-pointer text-stone-500 transition-colors hover:text-stone-300 focus:outline-none focus-visible:underline"
-            >
-              Conditions
-            </a>
+            </Link>
           </div>
         </div>
       </div>
