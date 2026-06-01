@@ -1,6 +1,8 @@
 /**
- * Fetches the private iCal export and writes blocked date ranges for the static site.
- * URL: ICAL_EXPORT_URL env var, or web/calendar.config.json → exportUrl
+ * Fetches private iCal exports (Booking.com + Airbnb) and merges blocked dates.
+ *
+ * Env: ICAL_EXPORT_URL, AIRBNB_ICAL_URL
+ * Local (gitignored): web/calendar.config.json → bookingExportUrl, airbnbExportUrl
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -10,17 +12,33 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const webRoot = join(__dirname, '..')
 const outPath = join(webRoot, 'src/data/blocked-dates.json')
 
-function resolveExportUrl() {
+function resolveFeedUrls() {
+  const feeds = []
+
   if (process.env.ICAL_EXPORT_URL?.trim()) {
-    return process.env.ICAL_EXPORT_URL.trim()
+    feeds.push({ name: 'booking', url: process.env.ICAL_EXPORT_URL.trim() })
   }
+  if (process.env.AIRBNB_ICAL_URL?.trim()) {
+    feeds.push({ name: 'airbnb', url: process.env.AIRBNB_ICAL_URL.trim() })
+  }
+
   const configPath = join(webRoot, 'calendar.config.json')
   if (existsSync(configPath)) {
     const config = JSON.parse(readFileSync(configPath, 'utf8'))
-    if (config.exportUrl?.trim()) return config.exportUrl.trim()
+    if (config.bookingExportUrl?.trim()) {
+      feeds.push({ name: 'booking', url: config.bookingExportUrl.trim() })
+    }
+    if (config.airbnbExportUrl?.trim()) {
+      feeds.push({ name: 'airbnb', url: config.airbnbExportUrl.trim() })
+    }
   }
-  console.warn('[fetch-calendar] No iCal URL configured — writing empty ranges.')
-  return null
+
+  const seen = new Set()
+  return feeds.filter((feed) => {
+    if (seen.has(feed.url)) return false
+    seen.add(feed.url)
+    return true
+  })
 }
 
 /** Unfold RFC 5545 line continuations. */
@@ -79,55 +97,73 @@ function parseBlockedRanges(icalText) {
     }
   }
 
-  ranges.sort((a, b) => a.start.localeCompare(b.start))
+  return ranges
+}
+
+async function fetchFeed(feed) {
+  const res = await fetch(feed.url)
+  if (!res.ok) {
+    throw new Error(`${feed.name} iCal fetch failed: ${res.status} ${res.statusText}`)
+  }
+  const text = await res.text()
+  const ranges = parseBlockedRanges(text)
+  console.log(`[fetch-calendar] ${feed.name}: ${ranges.length} blocked range(s)`)
   return ranges
 }
 
 async function main() {
-  const exportUrl = resolveExportUrl()
+  const feeds = resolveFeedUrls()
   const isCI = process.env.GITHUB_ACTIONS === 'true'
 
-  if (!exportUrl) {
-    if (isCI && existsSync(outPath)) {
+  if (feeds.length === 0) {
+    if (existsSync(outPath)) {
       console.warn(
-        '[fetch-calendar] ICAL_EXPORT_URL absent — conservation de src/data/blocked-dates.json existant.',
+        '[fetch-calendar] Aucune URL iCal — conservation de src/data/blocked-dates.json existant.',
       )
-      console.warn(
-        '[fetch-calendar] Ajoutez le secret ICAL_EXPORT_URL dans Settings → Secrets → Actions.',
-      )
+      if (isCI) {
+        console.warn(
+          '[fetch-calendar] Secrets GitHub : ICAL_EXPORT_URL (Booking) et/ou AIRBNB_ICAL_URL (Airbnb).',
+        )
+      } else {
+        console.warn(
+          '[fetch-calendar] Local : calendar.config.json (gitignored) ou variables d’environnement.',
+        )
+      }
       return
     }
     if (isCI) {
       throw new Error(
-        'ICAL_EXPORT_URL manquant : ajoutez le secret dans GitHub (Settings → Secrets → Actions).',
+        'Au moins un secret iCal requis : ICAL_EXPORT_URL et/ou AIRBNB_ICAL_URL (Settings → Secrets → Actions).',
       )
     }
-    const payload = {
-      updatedAt: new Date().toISOString(),
-      source: 'none',
-      ranges: [],
-    }
-    writeFileSync(outPath, `${JSON.stringify(payload, null, 2)}\n`)
+    writeFileSync(
+      outPath,
+      `${JSON.stringify({ updatedAt: new Date().toISOString(), source: 'none', feeds: [], ranges: [] }, null, 2)}\n`,
+    )
     console.warn('[fetch-calendar] Pas d’URL iCal — calendrier vide en local.')
     console.warn('[fetch-calendar] Copiez calendar.config.example.json → calendar.config.json (gitignored).')
     return
   }
 
+  const merged = []
+  const feedNames = []
+
+  for (const feed of feeds) {
+    merged.push(...(await fetchFeed(feed)))
+    feedNames.push(feed.name)
+  }
+
+  merged.sort((a, b) => a.start.localeCompare(b.start))
+
   const payload = {
     updatedAt: new Date().toISOString(),
     source: 'ical',
-    ranges: [],
+    feeds: feedNames,
+    ranges: merged,
   }
 
-  const res = await fetch(exportUrl)
-  if (!res.ok) {
-    throw new Error(`iCal fetch failed: ${res.status} ${res.statusText}`)
-  }
-
-  const text = await res.text()
-  payload.ranges = parseBlockedRanges(text)
   writeFileSync(outPath, `${JSON.stringify(payload, null, 2)}\n`)
-  console.log(`[fetch-calendar] ${payload.ranges.length} blocked range(s) → ${outPath}`)
+  console.log(`[fetch-calendar] ${merged.length} blocked range(s) total → ${outPath}`)
 }
 
 main().catch((err) => {

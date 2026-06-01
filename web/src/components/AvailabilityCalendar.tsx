@@ -57,11 +57,11 @@ export function AvailabilityCalendar() {
               Disponibilités
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-brand-muted">
-              Dates déjà réservées (synchronisation Booking.com)
+              Dates déjà réservées (Airbnb & Booking.com)
             </p>
             <p className="mt-4 text-base leading-relaxed text-brand-muted">
-              Les jours barrés correspondent aux nuits déjà réservées. Pour toute autre période,
-              contactez-nous ou réservez via Airbnb.
+              Les jours barrés correspondent aux nuits déjà réservées sur Airbnb ou Booking.com.
+              Pour toute autre période, contactez-nous ou réservez via votre plateforme habituelle.
             </p>
             <a
               href="#contact"

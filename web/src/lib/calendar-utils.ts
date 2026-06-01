@@ -6,6 +6,7 @@ export type BlockedRange = {
 export type BlockedDatesData = {
   updatedAt: string
   source: string
+  feeds?: string[]
   ranges: BlockedRange[]
 }
 

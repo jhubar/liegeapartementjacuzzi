@@ -1,3 +1,4 @@
 {
-  "exportUrl": "https://ical.booking.com/v1/export?t=VOTRE_TOKEN"
+  "bookingExportUrl": "https://ical.booking.com/v1/export?t=VOTRE_TOKEN_BOOKING",
+  "airbnbExportUrl": "https://fr.airbnb.be/calendar/ical/VOTRE_ANNONCE.ics?t=VOTRE_TOKEN_AIRBNB"
 }
