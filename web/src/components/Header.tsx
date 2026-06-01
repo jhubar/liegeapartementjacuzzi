@@ -8,7 +8,7 @@ const nav = [
   { href: '#tarifs', label: 'Tarifs' },
   { href: '#disponibilites', label: 'Disponibilités' },
   { href: '#localisation', label: 'Localisation' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#reserver', label: 'Réserver' },
 ] as const
 
 export function Header() {

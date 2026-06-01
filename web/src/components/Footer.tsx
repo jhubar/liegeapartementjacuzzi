@@ -1,4 +1,4 @@
-import { AIRBNB_LISTING_URL } from '../config/booking-links'
+import { AIRBNB_LISTING_URL, CONTACT_EMAIL } from '../config/booking-links'
 
 const footerLinks = [
   { href: '#accueil', label: 'Accueil' },
@@ -6,6 +6,7 @@ const footerLinks = [
   { href: '#chambres', label: 'Chambres' },
   { href: '#tarifs', label: 'Tarifs' },
   { href: '#disponibilites', label: 'Disponibilités' },
+  { href: '#reserver', label: 'Réserver' },
   { href: '#localisation', label: 'Localisation' },
 ] as const
 
@@ -72,10 +73,10 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:contact@example.com"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="cursor-pointer transition-colors hover:text-white focus:outline-none focus-visible:underline"
                 >
-                  contact@example.com
+                  {CONTACT_EMAIL}
                 </a>
               </li>
             </ul>

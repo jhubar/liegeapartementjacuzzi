@@ -56,7 +56,7 @@ export function PricingSection() {
               href="#reserver"
               className="mt-8 inline-flex cursor-pointer items-center justify-center rounded-full bg-brand-accent px-6 py-3.5 text-center text-sm font-semibold text-white shadow-soft transition-colors duration-200 hover:bg-brand-accent-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
             >
-              Vérifier les tarifs en ligne
+              Réserver en ligne
             </a>
           </div>
         </div>

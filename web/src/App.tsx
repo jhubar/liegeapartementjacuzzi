@@ -8,7 +8,7 @@ import { PricingSection } from './components/PricingSection'
 import { AvailabilityCalendar } from './components/AvailabilityCalendar'
 import { LocationSection } from './components/LocationSection'
 import { GalleryGrid } from './components/GalleryGrid'
-import { CTASection } from './components/CTASection'
+import { BookingSection } from './components/BookingSection'
 import { Footer } from './components/Footer'
 
 export default function App() {
@@ -31,7 +31,7 @@ export default function App() {
         <AvailabilityCalendar />
         <LocationSection />
         <GalleryGrid />
-        <CTASection />
+        <BookingSection />
       </main>
       <Footer />
     </>

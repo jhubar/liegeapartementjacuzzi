@@ -47,6 +47,22 @@ export function isDateBlocked(iso: string, ranges: BlockedRange[]): boolean {
   return false
 }
 
+/** Each night from check-in (inclusive) to check-out (exclusive). */
+export function enumerateStayNights(checkIn: string, checkOut: string): string[] {
+  if (!checkIn || !checkOut || checkOut <= checkIn) return []
+
+  const nights: string[] = []
+  let cur = parseIsoDate(checkIn)
+  const end = parseIsoDate(checkOut)
+
+  while (cur < end) {
+    nights.push(toIsoDate(cur))
+    cur = new Date(cur.getFullYear(), cur.getMonth(), cur.getDate() + 1)
+  }
+
+  return nights
+}
+
 export function formatMonthLabel(year: number, monthIndex: number): string {
   return `${MONTH_NAMES[monthIndex]} ${year}`
 }

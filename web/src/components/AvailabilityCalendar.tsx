@@ -64,10 +64,10 @@ export function AvailabilityCalendar() {
               Pour toute autre période, contactez-nous ou réservez via votre plateforme habituelle.
             </p>
             <a
-              href="#contact"
+              href="#reserver"
               className="mt-8 inline-flex cursor-pointer items-center justify-center rounded-full bg-brand-accent px-6 py-3.5 text-sm font-semibold text-white shadow-soft transition-colors duration-200 hover:bg-brand-accent-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
             >
-              Demander une réservation
+              Réserver ces dates
             </a>
           </div>
 
