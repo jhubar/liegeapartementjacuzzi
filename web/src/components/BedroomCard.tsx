@@ -1,4 +1,4 @@
-import { Lamp, Wind, Sparkles } from 'lucide-react'
+import { BedDouble, Lamp, Wind, Sparkles } from 'lucide-react'
 
 export type BedroomCardProps = {
   title: string
@@ -38,10 +38,11 @@ export function BedroomCard({ title, description, imageSrc, imageAlt }: BedroomC
             <Sparkles className="h-3.5 w-3.5 text-brand-accent" aria-hidden />
             Literie de qualité
           </li>
+          <li className="inline-flex items-center gap-1.5 rounded-full bg-brand-sand px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-brand-muted">
+            <BedDouble className="h-3.5 w-3.5 text-brand-accent" aria-hidden />
+            Lit double
+          </li>
         </ul>
-        <p className="mt-4 text-sm italic text-stone-500">
-          Détails du couchage : à préciser (configuration exacte à confirmer).
-        </p>
       </div>
     </article>
   )
