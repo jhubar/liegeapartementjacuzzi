@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { getSiteName } from '../config/site'
-import { homeSectionTo } from '../lib/paths'
+import { HomeSectionLink } from './HomeSectionLink'
 
 const nav = [
   { hash: '#accueil', label: 'Accueil' },
@@ -42,37 +41,37 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-content items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <Link
-          to={homeSectionTo('#accueil')}
+        <HomeSectionLink
+          hash="#accueil"
           className="group flex cursor-pointer items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-brand-cream"
         >
           <span className="font-display text-lg font-semibold tracking-tight text-brand-ink transition-colors duration-200 group-hover:text-brand-accent sm:text-xl">
             {siteName}
           </span>
-        </Link>
+        </HomeSectionLink>
 
         <nav
           className="hidden items-center gap-1 lg:flex"
           aria-label="Navigation principale"
         >
           {nav.map((item) => (
-            <Link
+            <HomeSectionLink
               key={item.hash}
-              to={homeSectionTo(item.hash)}
+              hash={item.hash}
               className="cursor-pointer rounded-full px-3 py-2 text-sm font-medium text-brand-muted transition-colors duration-200 hover:bg-brand-sand hover:text-brand-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
             >
               {item.label}
-            </Link>
+            </HomeSectionLink>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            to={homeSectionTo('#reserver')}
+          <HomeSectionLink
+            hash="#reserver"
             className="hidden cursor-pointer rounded-full bg-brand-accent px-4 py-2.5 text-sm font-semibold text-white shadow-soft transition-all duration-200 hover:bg-brand-accent-soft hover:shadow-lift focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-brand-cream sm:inline-flex"
           >
             Réserver
-          </Link>
+          </HomeSectionLink>
           <button
             type="button"
             className="inline-flex cursor-pointer rounded-full p-2.5 text-brand-ink transition-colors hover:bg-brand-sand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent lg:hidden"
@@ -93,22 +92,22 @@ export function Header() {
         >
           <div className="mx-auto flex max-w-content flex-col gap-1">
             {nav.map((item) => (
-              <Link
+              <HomeSectionLink
                 key={item.hash}
-                to={homeSectionTo(item.hash)}
+                hash={item.hash}
                 className="cursor-pointer rounded-xl px-3 py-3 text-base font-medium text-brand-ink transition-colors hover:bg-brand-sand"
                 onClick={() => setOpen(false)}
               >
                 {item.label}
-              </Link>
+              </HomeSectionLink>
             ))}
-            <Link
-              to={homeSectionTo('#reserver')}
+            <HomeSectionLink
+              hash="#reserver"
               className="mt-3 cursor-pointer rounded-full bg-brand-accent px-4 py-3 text-center text-sm font-semibold text-white"
               onClick={() => setOpen(false)}
             >
               Réserver
-            </Link>
+            </HomeSectionLink>
           </div>
         </div>
       )}

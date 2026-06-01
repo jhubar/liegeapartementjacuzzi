@@ -13,6 +13,7 @@ import { BookingSection } from '../components/BookingSection'
 import { SeoHead } from '../components/SeoHead'
 import { DEFAULT_DESCRIPTION, getSiteName } from '../config/site'
 import { buildVacationRentalSchema } from '../lib/schema'
+import { scrollToSectionWhenReady } from '../lib/scroll-to-section'
 
 export function HomePage() {
   const location = useLocation()
@@ -20,12 +21,7 @@ export function HomePage() {
 
   useEffect(() => {
     if (location.hash) {
-      const el = document.querySelector(location.hash)
-      if (el) {
-        requestAnimationFrame(() => {
-          el.scrollIntoView({ behavior: 'smooth' })
-        })
-      }
+      scrollToSectionWhenReady(location.hash)
     }
   }, [location.pathname, location.hash])
 
