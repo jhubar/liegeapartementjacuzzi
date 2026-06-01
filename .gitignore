@@ -1,0 +1,4 @@
+.DS_Store
+web/node_modules/
+web/.env
+web/calendar.config.json

@@ -5,7 +5,7 @@ import { BedroomsSection } from './components/BedroomsSection'
 import { LivingKitchenSection } from './components/LivingKitchenSection'
 import { TerraceSection } from './components/TerraceSection'
 import { PricingSection } from './components/PricingSection'
-import { AvailabilityCalendarPlaceholder } from './components/AvailabilityCalendarPlaceholder'
+import { AvailabilityCalendar } from './components/AvailabilityCalendar'
 import { LocationSection } from './components/LocationSection'
 import { GalleryGrid } from './components/GalleryGrid'
 import { CTASection } from './components/CTASection'
@@ -28,7 +28,7 @@ export default function App() {
         <LivingKitchenSection />
         <TerraceSection />
         <PricingSection />
-        <AvailabilityCalendarPlaceholder />
+        <AvailabilityCalendar />
         <LocationSection />
         <GalleryGrid />
         <CTASection />
