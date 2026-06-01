@@ -99,3 +99,34 @@ export function addMonths(year: number, monthIndex: number, delta: number): [num
   const d = new Date(year, monthIndex + delta, 1)
   return [d.getFullYear(), d.getMonth()]
 }
+
+export function isPastDate(iso: string, minIso: string): boolean {
+  return iso < minIso
+}
+
+/** Nights between check-in (inclusive) and check-out (exclusive). */
+export function isInStayRange(iso: string, checkIn: string, checkOut: string): boolean {
+  if (!checkIn || !checkOut || checkOut <= checkIn) return false
+  return iso >= checkIn && iso < checkOut
+}
+
+/** Preview range while selecting check-out (end exclusive). */
+export function isInPreviewRange(
+  iso: string,
+  checkIn: string,
+  previewEnd: string | null | undefined,
+): boolean {
+  if (!checkIn || !previewEnd || previewEnd <= checkIn) return false
+  return iso >= checkIn && iso < previewEnd
+}
+
+export function formatDateFr(
+  iso: string,
+  options: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  },
+): string {
+  return new Intl.DateTimeFormat('fr-BE', options).format(parseIsoDate(iso))
+}

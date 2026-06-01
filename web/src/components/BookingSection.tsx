@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
+import { ChevronDown, Users } from 'lucide-react'
 import blockedDatesJson from '../data/blocked-dates.json'
+import { DateRangePicker } from './DateRangePicker'
 import {
   AIRBNB_LISTING_URL,
   BOOKING_FORM_ENDPOINT,
@@ -159,47 +161,42 @@ export function BookingSection() {
               </button>
             </div>
 
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <label className="block text-sm font-medium text-brand-ink">
-                Arrivée
-                <input
-                  type="date"
-                  className={inputClass}
-                  value={checkIn}
-                  min={minDate}
-                  onChange={(e) => {
-                    setCheckIn(e.target.value)
-                    if (checkOut && e.target.value >= checkOut) setCheckOut('')
-                  }}
-                  required
-                />
-              </label>
-              <label className="block text-sm font-medium text-brand-ink">
-                Départ
-                <input
-                  type="date"
-                  className={inputClass}
-                  value={checkOut}
-                  min={checkIn || minDate}
-                  onChange={(e) => setCheckOut(e.target.value)}
-                  required
-                />
-              </label>
+            <div className="mt-6">
+              <DateRangePicker
+              checkIn={checkIn}
+              checkOut={checkOut}
+              onChange={(inDate, outDate) => {
+                setCheckIn(inDate)
+                setCheckOut(outDate)
+              }}
+              ranges={blockedData.ranges}
+              minDate={minDate}
+              />
             </div>
 
             <label className="mt-4 block text-sm font-medium text-brand-ink">
               Voyageurs
-              <select
-                className={inputClass}
-                value={guests}
-                onChange={(e) => setGuests(Number(e.target.value))}
-              >
-                {Array.from({ length: BOOKING_MAX_GUESTS }, (_, i) => i + 1).map((n) => (
-                  <option key={n} value={n}>
-                    {n} {n === 1 ? 'voyageur' : 'voyageurs'}
-                  </option>
-                ))}
-              </select>
+              <div className="relative mt-1.5">
+                <Users
+                  className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-muted"
+                  aria-hidden
+                />
+                <select
+                  className={`${inputClass} cursor-pointer appearance-none pl-11 pr-10`}
+                  value={guests}
+                  onChange={(e) => setGuests(Number(e.target.value))}
+                >
+                  {Array.from({ length: BOOKING_MAX_GUESTS }, (_, i) => i + 1).map((n) => (
+                    <option key={n} value={n}>
+                      {n} {n === 1 ? 'voyageur' : 'voyageurs'}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-muted"
+                  aria-hidden
+                />
+              </div>
             </label>
 
             {validationError && (
