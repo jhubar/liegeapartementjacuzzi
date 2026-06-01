@@ -1,5 +1,5 @@
 import { BedroomCard } from './BedroomCard'
-import { images } from '../data/images'
+import { bedrooms } from '../data/bedrooms'
 
 export function BedroomsSection() {
   return (
@@ -13,27 +13,20 @@ export function BedroomsSection() {
         </h2>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed text-brand-muted">
           Chaque chambre offre une atmosphère intimiste pour se reposer après une journée dans Liège
-          — tons doux, matériaux agréables et détails soignés.
+          — tons doux, matériaux agréables et détails soignés. Cliquez sur une chambre pour voir
+          toutes les photos.
         </p>
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-          <BedroomCard
-            title="Chambre jaune"
-            description="Lumière dorée et ambiance enveloppante — une retraite douillette pour des nuits paisibles."
-            imageSrc={images.bedrooms.jaune}
-            imageAlt="Chambre jaune, décoration chaleureuse"
-          />
-          <BedroomCard
-            title="Chambre verte"
-            description="Une touche naturelle et apaisante, idéale pour se déconnecter tout en restant en ville."
-            imageSrc={images.bedrooms.verte}
-            imageAlt="Chambre verte, tons naturels et reposants"
-          />
-          <BedroomCard
-            title="Chambre rose"
-            description="Une chambre lumineuse au caractère doux — parfaite pour prolonger la convivialité de votre séjour."
-            imageSrc={images.bedrooms.rose}
-            imageAlt="Chambre rose, atmosphère douce et accueillante"
-          />
+          {bedrooms.map((bedroom) => (
+            <BedroomCard
+              key={bedroom.slug}
+              slug={bedroom.slug}
+              title={bedroom.title}
+              description={bedroom.description}
+              imageSrc={bedroom.photos[0].src}
+              imageAlt={bedroom.photos[0].alt}
+            />
+          ))}
         </div>
       </div>
     </section>

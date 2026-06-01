@@ -1,13 +1,15 @@
+import { Link } from 'react-router-dom'
 import { AIRBNB_LISTING_URL, CONTACT_EMAIL } from '../config/booking-links'
+import { homeSectionTo } from '../lib/paths'
 
 const footerLinks = [
-  { href: '#accueil', label: 'Accueil' },
-  { href: '#appartement', label: 'Appartement' },
-  { href: '#chambres', label: 'Chambres' },
-  { href: '#tarifs', label: 'Tarifs' },
-  { href: '#disponibilites', label: 'Disponibilités' },
-  { href: '#reserver', label: 'Réserver' },
-  { href: '#localisation', label: 'Localisation' },
+  { hash: '#accueil', label: 'Accueil' },
+  { hash: '#appartement', label: 'Appartement' },
+  { hash: '#chambres', label: 'Chambres' },
+  { hash: '#tarifs', label: 'Tarifs' },
+  { hash: '#disponibilites', label: 'Disponibilités' },
+  { hash: '#reserver', label: 'Réserver' },
+  { hash: '#localisation', label: 'Localisation' },
 ] as const
 
 export function Footer() {
@@ -29,13 +31,13 @@ export function Footer() {
             </p>
             <ul className="mt-4 space-y-2 text-sm">
               {footerLinks.map((l) => (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
+                <li key={l.hash}>
+                  <Link
+                    to={homeSectionTo(l.hash)}
                     className="cursor-pointer text-stone-300 transition-colors hover:text-white focus:outline-none focus-visible:text-white focus-visible:underline"
                   >
                     {l.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

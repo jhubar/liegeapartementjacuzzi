@@ -1,4 +1,5 @@
 import { imgUrl } from '../lib/paths'
+import { bedrooms } from './bedrooms'
 
 /** Central image map — swap files here without touching components. */
 export const images = {
@@ -7,9 +8,9 @@ export const images = {
   /** PNG — copie de `ChatGPT Image…png` sous nom simple pour URL fiables */
   terrace: imgUrl('Terrasse', 'terrasse-hero.png'),
   bedrooms: {
-    jaune: imgUrl('Chambre jaune', '20260511_152051.jpg'),
-    verte: imgUrl('Chambre verte', '20260511_122456.jpg'),
-    rose: imgUrl('Chambre rose', '20260511_152225.jpg'),
+    jaune: bedrooms[0].photos[0].src,
+    verte: bedrooms[1].photos[0].src,
+    rose: bedrooms[2].photos[0].src,
   },
   gallery: [
     { src: imgUrl('living cuisine', '20260511_115150.jpg'), alt: 'Salon et cuisine ouverte' },
